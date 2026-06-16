@@ -39,13 +39,17 @@ const CartItem = ({ onContinueShopping }) => {
     if (item.quantity > 1) {
       dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
     } else if (item.quantity === 1) {
-      dispatch(removeItem(item.name));
+      if (window.confirm('Are you sure you want to remove this item from the cart?')) {
+        dispatch(removeItem(item.name));
+      }
     }
   };
 
   const handleRemove = (item) => {
     // Completely remove the item from the cart
-    dispatch(removeItem(item.name));
+    if (window.confirm('Are you sure you want to remove this item from the cart?')) {
+      dispatch(removeItem(item.name));
+    }
   };
 
   return (
