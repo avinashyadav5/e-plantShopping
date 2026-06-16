@@ -6,29 +6,46 @@ const CartItem = ({ onContinueShopping }) => {
   const cartItems = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
 
-  // Calculate total amount
+  // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
-    return cartItems.reduce((total, item) => total + item.cost * item.quantity, 0);
+    let totalAmount = 0;
+    cartItems.forEach((item) => {
+      totalAmount += item.cost * item.quantity;
+    });
+    return totalAmount;
   };
 
-  // Calculate total for a single item
+  // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
     return item.cost * item.quantity;
   };
 
+  const handleContinueShopping = (e) => {
+    if (onContinueShopping) {
+      onContinueShopping(e);
+    }
+  };
+
+  const handleCheckoutShopping = (e) => {
+    alert('Functionality to be added for future reference');
+  };
+
   const handleIncrement = (item) => {
+    // Increment the quantity of the item
     dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
   };
 
   const handleDecrement = (item) => {
-    if (item.quantity > 1) {
-      dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
-    } else {
+    // Ensuring that the decrement functionality correctly removes items from the cart when their quantity reaches zero
+    if (item.quantity === 1 || item.quantity === 0) {
       dispatch(removeItem(item.name));
+    } else {
+      dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
     }
   };
 
   const handleRemove = (item) => {
+    // Completely remove the item from the cart
     dispatch(removeItem(item.name));
   };
 
@@ -61,10 +78,10 @@ const CartItem = ({ onContinueShopping }) => {
       </div>
 
       <div className="cart-summary">
-        <h3>Total Cart Amount: ${calculateTotalAmount()}</h3>
+        <h3 className="total-cart-amount">Total Cart Amount: ${calculateTotalAmount()}</h3>
         <div className="cart-actions">
-          <button className="continue-btn" onClick={onContinueShopping}>Continue Shopping</button>
-          <button className="checkout-btn" onClick={() => alert('Coming Soon!')}>Checkout</button>
+          <button className="continue-btn" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
+          <button className="checkout-btn" onClick={(e) => handleCheckoutShopping(e)}>Checkout</button>
         </div>
       </div>
     </div>
