@@ -78,7 +78,7 @@ function App() {
         <div className="landing-page">
           <div className="landing-content">
             <div className="landing-content-left">
-              <h1>Paradise Nursery</h1>
+              <h1>Welcome To Paradise Nursery</h1>
               <div className="divider" style={{ width: '60px', height: '4px', margin: '20px auto', backgroundColor: 'var(--primary-light)' }}></div>
               <p style={{ fontSize: '1.2rem' }}>Where Green Meets Serenity</p>
               {/* Added explicitly defined setShowProductList logic to button click as per grader feedback */}

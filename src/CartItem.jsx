@@ -36,11 +36,10 @@ const CartItem = ({ onContinueShopping }) => {
   };
 
   const handleDecrement = (item) => {
-    // Ensuring that the decrement functionality correctly removes items from the cart when their quantity reaches zero
-    if (item.quantity === 1 || item.quantity === 0) {
-      dispatch(removeItem(item.name));
-    } else {
+    if (item.quantity > 1) {
       dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
+    } else if (item.quantity === 1) {
+      dispatch(removeItem(item.name));
     }
   };
 
